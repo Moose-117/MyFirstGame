@@ -1,0 +1,35 @@
+<!--
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.text.TextAlignment?>
+<?import javafx.scene.image.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="320" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.myfirstgame.SpinnerController">
+	<children>
+		<Label layoutX="0" layoutY="5" minWidth="400" style="-fx-alignment: center;">
+			<font>
+				<Font size="15" />
+			</font>
+			<text>Hello World</text>
+		</Label>
+		<Button fx:id="button" contentDisplay="CENTER" defaultButton="true" layoutX="161.0" layoutY="272.0" text="Click Me!" />
+		<Label fx:id="label" layoutX="10" layoutY="30" minHeight="20" minWidth="70">
+			<text>You haven't spun yet!</text>
+		</Label>
+               <ImageView fx:id="imageView" layoutX="29.0" layoutY="44.0" fitHeight="224.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true">
+                <image>
+                  <Image url="file:C:\Users\marco\OneDrive\Desktop\sprites\idle1.png" />
+                </image>
+              </ImageView>
+
+	</children>
+</AnchorPane>
+
+-->
