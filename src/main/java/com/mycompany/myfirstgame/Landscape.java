@@ -1,20 +1,12 @@
- package com.mycompany.myfirstgame;
-
-import java.util.ArrayList;
+package com.mycompany.myfirstgame;
 
 import com.google.inject.Inject;
 
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import java.util.HashMap;
+import javafx.scene.layout.BorderPane;
 
 public class Landscape {
     private Sprites sprites;
@@ -25,34 +17,41 @@ public class Landscape {
 
     @Inject
     public Landscape(Sprites sprites) {
-        this.sprites = sprites;
+       
+        initializeGraphics();
+        initializeSprites(sprites);
+    }
+
+    public void initializeSprites(Sprites sprites) {
+    this.sprites = sprites;    
+    }
+
+    private void initializeGraphics() {
         this.canvas = new Canvas(600, 600);
         this.root = new BorderPane();
         this.scene = new Scene(root);
         this.context = canvas.getGraphicsContext2D();
-        initialize();
-    }
-
-    private void initialize() {
         context.setFill(Color.FORESTGREEN);
         context.fillRect(0, 0, 600, 600);
-        root.setCenter(canvas); // Aggiungi il canvas al root qui
-    }
-
-    public void render() {
-        context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight()); // Pulisci il canvas
-        context.setFill(Color.FORESTGREEN); // Imposta il colore
-        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight()); // Riempi lo sfondo
-        context.drawImage(Sprites.sprites.get("Chicorita").getImages().get(0), Sprites.sprites.get("Chicorita").getHitbox().getLayoutX(), Sprites.sprites.get("Chicorita").getHitbox().getLayoutY());
-    }
-
-    @Inject
-    public void setSprites(Sprites sprites) {
-        this.sprites = sprites;
+        root.setCenter(canvas);   
     }
     
+    public void render() {
+        context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        context.setFill(Color.FORESTGREEN);
+        context.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+
+        SpriteImplementation chicorita = sprites.getInstance().get("Chicorita");
+        if (chicorita != null) {
+            context.drawImage(chicorita.getImages().get(0), chicorita.getHitbox().getLayoutX(), chicorita.getHitbox().getLayoutY());
+        }
+    }
 
     public Scene getScene() {
         return scene;
+    }
+
+    public void setSprites(Sprites sprites) {
+        this.sprites = sprites;
     }
 }

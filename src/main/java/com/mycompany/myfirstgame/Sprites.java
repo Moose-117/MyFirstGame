@@ -4,11 +4,9 @@ import java.util.HashMap;
 
 public class Sprites {
 
-    public static HashMap<String, SpriteImplementation> sprites;
+    private static HashMap<String, SpriteImplementation> map = new HashMap<>();
 
-    Sprites(){
-        sprites = new HashMap<String, SpriteImplementation>();
+    public HashMap<String, SpriteImplementation> getInstance() {
+        return map;
     }
 }
-
-

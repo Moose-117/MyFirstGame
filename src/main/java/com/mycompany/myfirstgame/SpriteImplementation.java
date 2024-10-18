@@ -18,13 +18,13 @@ public class SpriteImplementation implements Movement{
     public Rectangle hitbox = new Rectangle();
     private ArrayList<Image> images = new ArrayList<>();
 
-    private static final String HERO_IMAGE_LOC_DX =   " file:/home/marco/Scrivania/Progetti Java/MyFirstGame/src/main/resources/frame_1.png";
-    private static final String HERO_IMAGE_LOC_2_DX = "file:/home/marco/Scrivania/Progetti Java/MyFirstGame/src/main/resources/frame_2.png";
-    private static final String HERO_IMAGE_LOC_3_DX = "file:/home/marco/Scrivania/Progetti Java/MyFirstGame/src/main/resources/frame_3.png";
+    private static final String HERO_IMAGE_LOC_DX =   "file:src\\main\\resources\\frame_1.png";
+    private static final String HERO_IMAGE_LOC_2_DX = "file:src\\main\\resources\\frame_2.png";
+    private static final String HERO_IMAGE_LOC_3_DX = "file:src\\main\\resources\\frame_3.png";
 
-    private static final String HERO_IMAGE_LOC = "file:/home/marco/Scrivania/Progetti Java/MyFirstGame/src/main/resources/frame_1.png";
-    private static final String HERO_IMAGE_LOC_2 = "file:/home/marco/Scrivania/Progetti Java/MyFirstGame/src/main/resources/frame_2.png";
-    private static final String HERO_IMAGE_LOC_3 = "file:/home/marco/Scrivania/Progetti Java/MyFirstGame/src/main/resources/frame_3.png";
+    private static final String HERO_IMAGE_LOC =   "file:src\\main\\resources\\frame_1.png";
+    private static final String HERO_IMAGE_LOC_2 = "file:src\\main\\resources\\frame_2.png";
+    private static final String HERO_IMAGE_LOC_3 = "file:src\\main\\resources\\frame_3.png";
 
     SpriteImplementation() {
         System.out.println("sto rigenereando lo sprite");
@@ -34,8 +34,15 @@ public class SpriteImplementation implements Movement{
         hitbox.setWidth(50.00);
         hitbox.setFill(new ImagePattern(new Image(HERO_IMAGE_LOC)));
         images.add(new Image(HERO_IMAGE_LOC));
+        System.out.println("SPRITE IE ADDED" + HERO_IMAGE_LOC);
+        System.out.println("IMMAGINE SALVATA = " + images.get(0).getPixelReader().toString());
         images.add(new Image(HERO_IMAGE_LOC_2));
+        System.out.println("SPRITE IE ADDED" + HERO_IMAGE_LOC_2);
+
         images.add(new Image(HERO_IMAGE_LOC_3));
+        System.out.println("SPRITE IE ADDED" + HERO_IMAGE_LOC_3);
+        
+
     }
 
     public Image wagTail() {

@@ -4,40 +4,37 @@ import javafx.application.Application;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import com.google.inject.Guice;
-import com.google.inject.Inject;
 import com.google.inject.Injector;
 import javafx.animation.AnimationTimer;
 
 public class App extends Application {
 
-    private Sprites sprites; // Memorizziamo lo sprite qui per poterlo usare negli eventi
+    private Sprites sprites; 
     private Landscape landscape;
-
 
     @Override
     public void start(Stage stage) throws Exception {
+        Injector injector = Guice.createInjector(new AppModule()); 
 
-        SpriteImplementation spriteImplementation = new SpriteImplementation();
-        sprites = new Sprites();
-        Sprites.sprites.put("Chicorita", spriteImplementation);
-        landscape = new Landscape(sprites);
-
-        Injector injector = Guice.createInjector();
+        // Ottieni istanze di Sprites e Landscape da Guice
         sprites = injector.getInstance(Sprites.class);
-        addCharactersToLandscape(sprites, landscape);
+        
+        // Aggiungi lo sprite
+        SpriteImplementation spriteImplementation = new SpriteImplementation();
+        sprites.getInstance().put("Chicorita", spriteImplementation);
+        
+        landscape = injector.getInstance(Landscape.class);
+        
+        // Aggiungi i personaggi al paesaggio
         initUI(stage); // Imposta l'interfaccia
     }
-
+    
     void initUI(Stage stage) {
-
         stage.setTitle("Chicorita's Dream");
         stage.setScene(landscape.getScene());
         getInputCommands(stage);
+        
         // Inizializza il loop di rendering
         AnimationTimer loop = new MyTimer() {
             @Override
@@ -52,35 +49,24 @@ public class App extends Application {
     }
 
     private void getInputCommands(Stage stage) {
-        // Aggiungi il gestore di eventi per i tasti
         stage.getScene().addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.LEFT) {
                 System.out.println("You pressed Left");
-                Sprites.sprites.get("Chicorita").goLeft(); // Usa lo sprite esistente
+                sprites.getInstance().get("Chicorita").goLeft(); 
             }
             if (key.getCode() == KeyCode.RIGHT) {
                 System.out.println("You pressed Right");
-                Sprites.sprites.get("Chicorita").goRight(); // Usa lo sprite esistente
+                sprites.getInstance().get("Chicorita").goRight(); 
             }
             if (key.getCode() == KeyCode.UP) {
                 System.out.println("You pressed UP");
-                Sprites.sprites.get("Chicorita").goLeft(); // Usa lo sprite esistente
+                // Aggiungi eventuale logica per il salto
             }
             if (key.getCode() == KeyCode.DOWN) {
                 System.out.println("You pressed Down");
-                Sprites.sprites.get("Chicorita").goRight(); // Usa lo sprite esistente
+                // Aggiungi eventuale logica per il movimento verso il basso
             }
         });
-    }
-
-    @Inject
-    void addCharactersToLandscape(Sprites sprites, Landscape landscape) {
-        landscape.setSprites(sprites);
-    }
-
-    @Inject
-    Landscape setLandscape(Landscape landscape) {
-        return this.landscape = landscape;
     }
 
     public static void main(String[] args) {
