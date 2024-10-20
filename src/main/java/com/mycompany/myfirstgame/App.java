@@ -12,6 +12,10 @@ public class App extends Application {
 
     private Sprites sprites; 
     private Landscape landscape;
+    private static final String HERO_IMAGE_BULBA =   "file:src\\main\\resources\\bulba.png";
+    private static final String HERO_IMAGE_LOC =   "file:src\\main\\resources\\frame_1.png";
+
+
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -20,9 +24,13 @@ public class App extends Application {
         // Ottieni istanze di Sprites e Landscape da Guice
         sprites = injector.getInstance(Sprites.class);
         
-        // Aggiungi lo sprite
-        SpriteImplementation spriteImplementation = new SpriteImplementation();
-        sprites.getInstance().put("Chicorita", spriteImplementation);
+        // Aggiungi lo sprite CHICORITA
+        SpriteImplementation spriteImplementationChico = new SpriteImplementation(HERO_IMAGE_LOC);
+        sprites.getInstance().put("Chicorita", spriteImplementationChico);
+
+        // Aggiungi lo sprite BULBASAUR
+        SpriteImplementation spriteImplementationBulba = new SpriteImplementation(HERO_IMAGE_BULBA);
+         sprites.getInstance().put("Bulbasaur", spriteImplementationBulba);
         
         landscape = injector.getInstance(Landscape.class);
         
@@ -30,7 +38,7 @@ public class App extends Application {
         initUI(stage); // Imposta l'interfaccia
     }
     
-    void initUI(Stage stage) {
+    private void initUI(Stage stage) {
         stage.setTitle("Chicorita's Dream");
         stage.setScene(landscape.getScene());
         getInputCommands(stage);
@@ -48,7 +56,7 @@ public class App extends Application {
         stage.show();
     }
 
-    private void getInputCommands(Stage stage) {
+    protected void getInputCommands(Stage stage) {
         stage.getScene().addEventHandler(KeyEvent.KEY_PRESSED, (key) -> {
             if (key.getCode() == KeyCode.LEFT) {
                 System.out.println("You pressed Left");
