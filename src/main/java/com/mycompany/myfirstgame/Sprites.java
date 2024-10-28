@@ -4,9 +4,9 @@ import java.util.HashMap;
 
 public class Sprites {
 
-    private static HashMap<String, SpriteImplementation> map = new HashMap<>();
+    private static HashMap<String, AbstractSprite> map = new HashMap<>();
 
-    public HashMap<String, SpriteImplementation> getInstance() {
+    public HashMap<String, AbstractSprite> getInstance() {
         return map;
     }
 }

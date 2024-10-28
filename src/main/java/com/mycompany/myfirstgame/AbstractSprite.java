@@ -1,64 +1,55 @@
 package com.mycompany.myfirstgame;
 
 import java.util.ArrayList;
+import java.util.function.IntPredicate;
 
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
 /**
  *
  * @author marco
  */
-public class SpriteImplementation implements Movement{
-
-    public Rectangle hitbox = new Rectangle();
-    private ArrayList<Image> images = new ArrayList<>();
-
-    private static final String HERO_IMAGE_LOC_DX =   "file:src\\main\\resources\\frame_1.png";
-    private static final String HERO_IMAGE_LOC_2_DX = "file:src\\main\\resources\\frame_2.png";
-    private static final String HERO_IMAGE_LOC_3_DX = "file:src\\main\\resources\\frame_3.png";
-    private static final String HERO_IMAGE_LOC =   "file:src\\main\\resources\\frame_1.png";
+public abstract class AbstractSprite {
 
     private static final String HERO_IMAGE_LOC_2 = "file:src\\main\\resources\\frame_2.png";
     private static final String HERO_IMAGE_LOC_3 = "file:src\\main\\resources\\frame_3.png";
     private static final String HERO_IMAGE_BULBA =   "file:src\\main\\resources\\bulba.png";
 
+    public Rectangle hitbox = new Rectangle();
+    private ArrayList<Image> images = new ArrayList<>();
+    private DirectionEnum directionEnum;
 
-    SpriteImplementation(String imageUrl) {
+    AbstractSprite(String imageUrl) {
         System.out.println("sto rigenereando lo sprite");
         hitbox.setLayoutX(300);
         hitbox.setLayoutY(300);
         hitbox.setHeight(59.00);
         hitbox.setWidth(50.00);
         hitbox.setFill(new ImagePattern(new Image(imageUrl)));
-        images.add(new Image(HERO_IMAGE_BULBA));
-        images.add(new Image(HERO_IMAGE_BULBA));
-        images.add(new Image(HERO_IMAGE_BULBA));
+        images.add(new Image(imageUrl));
+        images.add(new Image(imageUrl));
+        images.add(new Image(imageUrl));
+        directionEnum = DirectionEnum.STILL;
+    }
 
+    public void goRight() {
+        directionEnum = DirectionEnum.RIGHT;
+        images.set(0, this.wagTail());
+        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() + 1);
+    }
 
+    public void goLeft() {        
+        directionEnum = DirectionEnum.LEFT;
+        images.set(0, this.wagTail());
+        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() - 1);
     }
 
     public Image wagTail() {
         //the sprite visualized image is linked to its position along x axes (getLayoutX)
         return images.get((int) hitbox.getLayoutX()%3);
-    }
-
-    @Override
-    public void goRight() {
-        images.add(new Image(HERO_IMAGE_LOC_DX));
-        images.add(new Image(HERO_IMAGE_LOC_2_DX));
-        images.add(new Image(HERO_IMAGE_LOC_3_DX));        
-        images.set(0, this.wagTail());
-        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() + 1);
-    }
-
-    @Override
-    public void goLeft() {
-        images.add(new Image(HERO_IMAGE_LOC));
-        images.add(new Image(HERO_IMAGE_LOC_2));
-        images.add(new Image(HERO_IMAGE_LOC_3));        
-        images.set(0, this.wagTail());
-        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() - 1);
     }
 
     public Rectangle getHitbox() {
@@ -77,10 +68,19 @@ public class SpriteImplementation implements Movement{
         this.images = images;
     }
 
-    @Override
-    public void jump() {
-        // TODO Auto-generated method stub
-        
+    
+
+    public DirectionEnum getDirectionEnum() {
+        return directionEnum;
+    }
+
+    public void setDirectionEnum(DirectionEnum directionEnum) {
+        this.directionEnum = directionEnum;
+    }
+
+    protected abstract void getInputCommands(Stage stage);
+
+
     }
 
      // @Override
@@ -99,4 +99,4 @@ public class SpriteImplementation implements Movement{
     //             1000
     //     );
     // }    
-}
+
