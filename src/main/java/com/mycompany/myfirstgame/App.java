@@ -29,8 +29,6 @@ public class App extends Application {
         initSprites(injector);
         Image image = new Image(LANDSCAPE);
         initLandscape(injector, image);
-        // BinaryConverter.convertDecimalToBynary();
-        //scrollLandscape(injector, image);
         initUI(stage);
     }
 
@@ -68,16 +66,6 @@ public class App extends Application {
         AnimationTimer loop = new MyTimer() {
             @Override
             public void handle(long now) {
-                Image image = new Image(LANDSCAPE);
-                // scrollLandscape(i, image);
-
-                
-
-
-
-
-
-
                 landscape.render(); // Renderizza il paesaggio e lo sprite in ogni ciclo
             }
         };

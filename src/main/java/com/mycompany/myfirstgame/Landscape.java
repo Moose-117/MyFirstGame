@@ -37,7 +37,7 @@ public class Landscape {
     }
 
     private void initializeGraphics() {
-        this.canvas = new Canvas(1000, 1080);
+        this.canvas = new Canvas(800, 900);
         this.root = new BorderPane();
         this.scene = new Scene(root);
         this.context = canvas.getGraphicsContext2D();
@@ -78,7 +78,7 @@ public class Landscape {
     }
 
       private void scrollLandscape(int i, Image image, DirectionEnum direction) {
-        BackgroundPosition bgpos = new BackgroundPosition(Side.LEFT, i, false, null, 100, false);
+        BackgroundPosition bgpos = new BackgroundPosition(Side.LEFT, i, false, null, 588, false);
         BackgroundImage bgImage =new BackgroundImage(image, null, null,bgpos, null);
         Background bg = new Background(bgImage);
         setBackground(bg);
