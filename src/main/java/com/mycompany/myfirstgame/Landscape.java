@@ -59,7 +59,8 @@ public class Landscape {
 
     private void setLandscapeBeforeRendering(Image image) {
         context.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        scrollLandscape(i, image, sprites.getInstance().get("Chicorita").getDirectionEnum());     
+        scrollLandscape(i, image, sprites.getInstance().get("Chicorita").getDirectionEnum());  
+        sprites.getInstance().get("Chicorita").setDirectionEnum(DirectionEnum.STILL);
     }
 
     public Scene getScene() {
@@ -84,10 +85,10 @@ public class Landscape {
 
             if(direction == DirectionEnum.RIGHT){
             
-                this.i--;
+                this.i = i-10;
             }
             if(direction == DirectionEnum.LEFT)
-                this.i++;
+                this.i = i+10;
 
             }
 }
