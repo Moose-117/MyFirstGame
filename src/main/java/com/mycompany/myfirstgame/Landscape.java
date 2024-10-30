@@ -84,11 +84,24 @@ public class Landscape {
         setBackground(bg);
 
             if(direction == DirectionEnum.RIGHT){
-            
-                this.i = i-10;
-            }
-            if(direction == DirectionEnum.LEFT)
-                this.i = i+10;
+                System.out.println(" sprites.getInstance().get(\"Chicorita\").getHitbox().getLayoutX()\t" +  sprites.getInstance().get("Chicorita").getHitbox().getLayoutX());
+                System.out.println("canvas.getWidth())\t" + canvas.getWidth());
+                System.out.println(sprites.getInstance().get("Chicorita").getHitbox().getLayoutX() - canvas.getWidth());
 
+                if(sprites.getInstance().get("Chicorita").getHitbox().getLayoutX() >canvas.getWidth()-50){
+                    sprites.getInstance().get("Chicorita").getHitbox().setLayoutX(canvas.getWidth()-50);
+                    this.i = i-10;
+                }
             }
+            if(direction == DirectionEnum.LEFT){
+                System.out.println(" sprites.getInstance().get(\"Chicorita\").getHitbox().getLayoutX()\t" +  sprites.getInstance().get("Chicorita").getHitbox().getLayoutX());
+                System.out.println("canvas.getWidth())\t" + canvas.getWidth());
+                System.out.println(sprites.getInstance().get("Chicorita").getHitbox().getLayoutX() - canvas.getWidth());
+
+                if(sprites.getInstance().get("Chicorita").getHitbox().getLayoutX() < 0){
+                    sprites.getInstance().get("Chicorita").getHitbox().setLayoutX(0);
+                    this.i = i+10;
+                }
+            }
+        }
 }

@@ -38,13 +38,13 @@ public abstract class AbstractSprite {
     public void goRight() {
         directionEnum = DirectionEnum.RIGHT;
         images.set(0, this.wagTail());
-        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() + 1);
+        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() + 10);
     }
 
     public void goLeft() {        
         directionEnum = DirectionEnum.LEFT;
         images.set(0, this.wagTail());
-        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() - 1);
+        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() - 10);
     }
 
     public Image wagTail() {
