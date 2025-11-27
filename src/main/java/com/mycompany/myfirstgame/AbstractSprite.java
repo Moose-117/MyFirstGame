@@ -28,28 +28,25 @@ public abstract class AbstractSprite {
         hitbox.setLayoutY(300);
         hitbox.setHeight(59.00);
         hitbox.setWidth(50.00);
-        hitbox.setFill(new ImagePattern(new Image(imageUrl)));
-        images.add(new Image(imageUrl));
-        images.add(new Image(imageUrl));
         images.add(new Image(imageUrl));
         directionEnum = DirectionEnum.STILL;
     }
 
     public void goRight() {
         directionEnum = DirectionEnum.RIGHT;
-        images.set(0, this.wagTail());
-        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() + 10);
+        wagTail();
+        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() + 13);
     }
 
     public void goLeft() {        
         directionEnum = DirectionEnum.LEFT;
-        images.set(0, this.wagTail());
-        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() - 10);
+        wagTail();
+        this.getHitbox().setLayoutX(this.getHitbox().getLayoutX() - 13);
     }
 
-    public Image wagTail() {
-        //the sprite visualized image is linked to its position along x axes (getLayoutX)
-        return images.get((int) hitbox.getLayoutX()%3);
+    public void wagTail() {
+        System.out.println((int) hitbox.getLayoutX()%images.size());
+        images.set(0, images.get((int) hitbox.getLayoutX()%images.size()));
     }
 
     public Rectangle getHitbox() {

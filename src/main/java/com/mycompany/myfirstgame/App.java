@@ -1,15 +1,8 @@
 package com.mycompany.myfirstgame;
 
 import javafx.application.Application;
-import javafx.geometry.Side;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
 import javafx.stage.Stage;
-
-import javax.crypto.spec.PBEKeySpec;
-
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import javafx.animation.AnimationTimer;
@@ -18,60 +11,55 @@ public class App extends Application {
 
     private Sprites sprites; 
     private Landscape landscape;
-    private static final String HERO_IMAGE_BULBA =   "file:src\\main\\resources\\bulba.png";
-    private static final String HERO_IMAGE_LOC =   "file:src\\main\\resources\\frame_1.png";
-    private static final String LANDSCAPE=   "file:src\\main\\resources\\50624202.jpg";
-    int i =0;
+
+    private static final String LANDSCAPE = "file:src\\main\\resources\\50624202.jpg";
 
     @Override
     public void start(Stage stage) throws Exception {
-        Injector injector = Guice.createInjector(new AppModule());         
-        initSprites(injector);
+        // Carica l'immagine (può avere ancora le pubblicità, verranno rimosse in Landscape)
         Image image = new Image(LANDSCAPE);
-        initLandscape(injector, image);
-        initUI(stage);
+
+        initSprites();          // Inizializza gli sprite
+        initLandscape();        // Inizializza il paesaggio, usando gli sprite
+        initUI(stage);          // Inizializza la UI
     }
 
-    // private void scrollLandscape(int i, Image image) {
-    //         BackgroundPosition bgpos = new BackgroundPosition(Side.LEFT, i, false, null, 100, false);
-    //         BackgroundImage bgImage =new BackgroundImage(image, null, null,bgpos, null);
-    //         Background bg = new Background(bgImage);
-    //         landscape.setBackground(bg);
-    //         this.i--;
-    //     }        
-
-    private void initLandscape(final Injector injector, final Image image) {
-        landscape = injector.getInstance(Landscape.class);
-        BackgroundImage bgImage =new BackgroundImage(image, null, null,null, null);
-        Background bg = new Background(bgImage);
-        landscape.setBackground(bg);
-    }
-
-    private void initSprites(Injector injector) {
+    private void initSprites() {
+        Injector injector = Guice.createInjector(new AppModule());         
         sprites = injector.getInstance(Sprites.class);
-        ChicoritaSprite chicoritaSprite = new ChicoritaSprite(HERO_IMAGE_LOC);
+
+        ChicoritaSprite chicoritaSprite = new ChicoritaSprite();
         sprites.getInstance().put("Chicorita", chicoritaSprite);
 
-        BulbasaurSprite bulbasaurSprite = new BulbasaurSprite(HERO_IMAGE_BULBA);
-         sprites.getInstance().put("Bulbasaur", bulbasaurSprite);
+        BulbasaurSprite bulbasaurSprite = new BulbasaurSprite();
+        sprites.getInstance().put("Bulbasaur", bulbasaurSprite);
+    }
+
+    private void initLandscape() {
+        Injector injector = Guice.createInjector(new AppModule());         
+        landscape = injector.getInstance(Landscape.class);
+
+        // Imposta gli sprite in Landscape
+        landscape.initializeSprites(sprites);
     }
     
     private void initUI(Stage stage) {
         stage.setTitle("Chicorita's Dream");
         stage.setScene(landscape.getScene());
+
+        // Gestione input per gli sprite
         sprites.getInstance().get("Chicorita").getInputCommands(stage);
         sprites.getInstance().get("Bulbasaur").getInputCommands(stage);         
-    
-        // Inizializza il loop di rendering
-        AnimationTimer loop = new MyTimer() {
+
+        // Loop di rendering
+        AnimationTimer loop = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                landscape.render(); // Renderizza il paesaggio e lo sprite in ogni ciclo
+                landscape.render(); // Renderizza sfondo e sprite
             }
         };
-        loop.start(); // Avvia il loop di animazione
+        loop.start();
 
-        // Mostra la finestra
         stage.show();
     }
 
